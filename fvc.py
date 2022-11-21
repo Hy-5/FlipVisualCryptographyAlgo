@@ -17,15 +17,22 @@ def oneSplit():
         print(pic.size)
         pic = pic.convert("RGBA")
         pixel=pic.load()
-    matrixMapping=[0][0]*(pic.size[0])
+    matrixMapping=[[0]*(pic.size[1]) for _ in range(pic.size[0])]
     """for i in range (matrixMapping):
         for j in range (matrixMapping):
             print(matrixMapping[i,j])"""
     for i in range (pic.size[0]):
         for j in range(pic.size[1]):
             if pixel[i,j]<=(200,200,200,200):
-                #matrixMapping(i,j)==1
-                print("Here")
+                matrixMapping[j][i]=1
+                
+    #read mapped matrix
+    #print("test ",matrixMapping[2][6])
+    for i in range (pic.size[0]):
+        for j in range (pic.size[1]):
+            print(matrixMapping[i][j], end=" ")
+        print("\n")
+    
     return
 
 def imgCreate():
