@@ -1,3 +1,3 @@
 # FlipVisualCryptographyAlgo
 
-Implentation and testing of Flip Visual Cryptography Algorigthm
+Implentation and testing of Lin et al. Flip Visual Cryptography Algorigthm
