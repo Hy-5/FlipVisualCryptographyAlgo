@@ -1,30 +1,22 @@
-#CS6359 Project
-
 import sys, getopt, os, random
 import tkinter as tk
 from tkinter.filedialog import askopenfilename as loadimage
 from PIL import Image
 
 
-def oneSplit():
+def encryption():
 
-    #Creating a matrix to hold picture binary values
-
+    #initializing matrix holding picture's binary values (white pxl=0, black pxl=1)
 
     imgName=loadimage()
     print(imgName)
     with Image.open(imgName) as pic:
-        print("pic size =",pic.size)
+        print("pic size =",pic.size, end="\n")
         pic = pic.convert("RGBA")
         pixel=pic.load()
     matrixMapping=[[0]*(pic.size[1]) for _ in range(pic.size[0])]
     tcy1=[[0]*(pic.size[1]*2) for _ in range(pic.size[0]*2)]
     tcy2=[[0]*(pic.size[1]*2) for _ in range(pic.size[0]*2)]
-    """print("tcy1 =", tcy1)
-    print("tcy2 =", tcy2)"""
-    """for i in range (matrixMapping):
-        for j in range (matrixMapping):
-            print(matrixMapping[i,j])"""
     for i in range (pic.size[0]):
         for j in range(pic.size[1]):
             a=bool(random.getrandbits(1))
@@ -32,70 +24,38 @@ def oneSplit():
                 matrixMapping[j][i]=1
                 if (a):
                     tcy1[(j*2)][(i*2)]=1
-                    """tcy1[(j*2)][(i*2)+1]=0
-                    tcy1[(j*2)+1][(i*2)]=0"""
                     tcy1[(j*2)+1][(i*2)+1]=1
                     
-                    """tcy2[(j*2)][(i*2)]=0"""
                     tcy2[(j*2)][(i*2)+1]=1
                     tcy2[(j*2)+1][(i*2)]=1
-                    """tcy2[(j*2)+1][(i*2)+1]=0"""
                 else:
-                    """tcy1[(j*2)][(i*2)]=0"""
                     tcy1[(j*2)][(i*2)+1]=1
                     tcy1[(j*2)+1][(i*2)]=1
-                    """tcy1[(j*2)+1][(i*2)+1]=0"""
                     
                     tcy2[(j*2)][(i*2)]=1
-                    """tcy2[(j*2)][(i*2)+1]=0
-                    tcy2[(j*2)+1][(i*2)]=0"""
                     tcy2[(j*2)+1][(i*2)+1]=1
             else:
                 if (a):
                     tcy1[(j*2)][(i*2)]=1
-                    """tcy1[(j*2)][(i*2)+1]=0
-                    tcy1[(j*2)+1][(i*2)]=0"""
                     tcy1[(j*2)+1][(i*2)+1]=1
                     
                     tcy2[(j*2)][(i*2)]=1
-                    """tcy2[(j*2)][(i*2)+1]=0
-                    tcy2[(j*2)+1][(i*2)]=0"""
                     tcy2[(j*2)+1][(i*2)+1]=1
                 else:
-                    """tcy1[(j*2)][(i*2)]=0"""
                     tcy1[(j*2)][(i*2)+1]=1
                     tcy1[(j*2)+1][(i*2)]=1
-                    """tcy1[(j*2)+1][(i*2)+1]=0"""
                     
-                    """tcy2[(j*2)][(i*2)]=0"""
                     tcy2[(j*2)][(i*2)+1]=1
                     tcy2[(j*2)+1][(i*2)]=1
-                    """tcy2[(j*2)+1][(i*2)+1]=0"""
-    """print("\nReading transparencies\n")
-    print("tcy1=")
-    for i in range(len(tcy1)):
-        print(tcy1[i])
-    print("\ntcy2=")
-    for i in range(len(tcy2)):
-        print(tcy2[i])"""
-    tcyGen(tcy1, tcy2)
-    
-    #read mapped matrix
-    #print("test ",matrixMapping[2][6])
-    """for i in range (pic.size[0]):
-        for j in range (pic.size[1]):
-            print(matrixMapping[i][j], end=" ")
-        print("\n")"""
-    
+
+    tcyGen(tcy1, tcy2) 
     return
 
-#Colors specified in hex code, #000000 for opaque black, #ffffff for opaque white
-#Transparencies are last 2 chars and written as hex value of transparency percentage
-#fully transparent=> alpha=0 in decimal =0/255 => 00 in hex
-#fully opaque=> alpha=1 in decimal =255/255 => ff in hex
-#Thus full white but 100% transparent is #ffffff00
 
+#generates 2 transparency images from input matrices tcy1 and tcy2
 def tcyGen(tcy1, tcy2):
+    #colors are hex codes with (optional) 2 last characters for transparency
+    #Fully opaque = 255 in dec => ff in hex || Fully transparent = 0 in dec => 00 in hex
     tcy1Out=Image.new("RGBA",(len(tcy1),len(tcy1)),color="#000000")
     tcy2Out=Image.new("RGBA",(len(tcy2),len(tcy2)),color="#000000")
     
@@ -113,24 +73,12 @@ def tcyGen(tcy1, tcy2):
     tcy2Out.save("layer2.png")
     return
 
-def imgCreate():
-
-    return
-
-def encryption():
-    opt=input("\nChoose an option:\n1.Split a loaded image\n2.Create an encrypted image\n\n")
-    if (int(opt)==1):
-        oneSplit()
-    elif (int(opt)==2):
-        imgCreate()
-    return
-
+#adds up 2 secret images and outputs secret message in decryptedImage.png
 def decryption():
     print("Please choose the 1st layer")
     layer1=loadimage()
     print("Now choose the 2nd layer")
     layer2=loadimage()
-    
     
     with Image.open(layer1) as lay1:
         pix1=lay1.load()
@@ -141,30 +89,20 @@ def decryption():
     pixFinal=imgOut.load()
     for i in range (lay1.size[0]):
         for j in range (lay1.size[1]):
-            
             if (pix1[i,j])==(pix2[i,j]):
                 #print("same")
                 pixFinal[i,j]=pix1[i,j]
             else:
                 #print("not same")
                 pixFinal[i,j]=max(pix1[i,j],pix2[i,j])
-                """print("1:", pix1[i,j], end=" ")
-                print("2:", pix2[i,j], end=" ")"""
-                #print("Final:", pixFinal[i,j])
-            
-            """pixFinal[i,j]=pix1[i,j] or pix2[i,j]
-            print("pix1 values=", pix1[i,j])
-            print("pix2 values=", pix2[i,j])
-            print("pixFinal values=", pixFinal[i,j])"""
             
     imgOut.save("decryptedImage.png")
-    
-    
     return
 
 
 def main(argv):
-    inputImage1=""
+    #command line args 
+    """inputImage1=""
     inputImage2=""
 
     try:
@@ -176,20 +114,18 @@ def main(argv):
         if opt in ("-i", "--image1"):
             inputImage1=arg
         elif opt in ("-t", "--image2"):
-            inputImage2=arg
+            inputImage2=arg"""
 
-
+    #absolute path of args
     #print("Input file name of 1st image:\n", os.path.abspath(inputImage1))
     #print("\nInput file name of 2nd image:\n", os.path.abspath(inputImage2))
+    
     select=input("\nSelect one option of the Two.\n1.Encryption\n2.Decryption\n\n")
-
     if (int(select)==1):
         encryption()
     elif (int(select)==2):
         decryption()
     
-
-
 
 if __name__=='__main__':
     main(sys.argv[1:])
