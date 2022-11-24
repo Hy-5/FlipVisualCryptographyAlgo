@@ -31,49 +31,54 @@ def oneSplit():
             if pixel[i,j]<=(200,200,200,200):
                 matrixMapping[j][i]=1
                 if (a):
-                    tcy1[j][i]=1
-                    tcy1[j][i+1]=0
-                    tcy1[j+1][i]=0
-                    tcy1[j+1][i+1]=1
+                    tcy1[(j*2)][(i*2)]=1
+                    """tcy1[(j*2)][(i*2)+1]=0
+                    tcy1[(j*2)+1][(i*2)]=0"""
+                    tcy1[(j*2)+1][(i*2)+1]=1
                     
-                    tcy2[j][i]=0
-                    tcy2[j][i+1]=1
-                    tcy2[j+1][i]=1
-                    tcy2[j+1][i+1]=0
+                    """tcy2[(j*2)][(i*2)]=0"""
+                    tcy2[(j*2)][(i*2)+1]=1
+                    tcy2[(j*2)+1][(i*2)]=1
+                    """tcy2[(j*2)+1][(i*2)+1]=0"""
                 else:
-                    tcy1[j][i]=0
-                    tcy1[j][i+1]=1
-                    tcy1[j+1][i]=1
-                    tcy1[j+1][i+1]=0
+                    """tcy1[(j*2)][(i*2)]=0"""
+                    tcy1[(j*2)][(i*2)+1]=1
+                    tcy1[(j*2)+1][(i*2)]=1
+                    """tcy1[(j*2)+1][(i*2)+1]=0"""
                     
-                    tcy2[j][i]=1
-                    tcy2[j][i+1]=0
-                    tcy2[j+1][i]=0
-                    tcy2[j+1][i+1]=1
+                    tcy2[(j*2)][(i*2)]=1
+                    """tcy2[(j*2)][(i*2)+1]=0
+                    tcy2[(j*2)+1][(i*2)]=0"""
+                    tcy2[(j*2)+1][(i*2)+1]=1
             else:
                 if (a):
-                    tcy1[j][i]=1
-                    tcy1[j][i+1]=0
-                    tcy1[j+1][i]=0
-                    tcy1[j+1][i+1]=1
+                    tcy1[(j*2)][(i*2)]=1
+                    """tcy1[(j*2)][(i*2)+1]=0
+                    tcy1[(j*2)+1][(i*2)]=0"""
+                    tcy1[(j*2)+1][(i*2)+1]=1
                     
-                    tcy2[j][i]=1
-                    tcy2[j][i+1]=0
-                    tcy2[j+1][i]=0
-                    tcy2[j+1][i+1]=1
+                    tcy2[(j*2)][(i*2)]=1
+                    """tcy2[(j*2)][(i*2)+1]=0
+                    tcy2[(j*2)+1][(i*2)]=0"""
+                    tcy2[(j*2)+1][(i*2)+1]=1
                 else:
-                    tcy1[j][i]=0
-                    tcy1[j][i+1]=1
-                    tcy1[j+1][i]=1
-                    tcy1[j+1][i+1]=0
+                    """tcy1[(j*2)][(i*2)]=0"""
+                    tcy1[(j*2)][(i*2)+1]=1
+                    tcy1[(j*2)+1][(i*2)]=1
+                    """tcy1[(j*2)+1][(i*2)+1]=0"""
                     
-                    tcy2[j][i]=0
-                    tcy2[j][i+1]=1
-                    tcy2[j+1][i]=1
-                    tcy2[j+1][i+1]=0
+                    """tcy2[(j*2)][(i*2)]=0"""
+                    tcy2[(j*2)][(i*2)+1]=1
+                    tcy2[(j*2)+1][(i*2)]=1
+                    """tcy2[(j*2)+1][(i*2)+1]=0"""
     print("\nReading transparencies\n")
-    print("tcy1=\n", tcy1 )
-    print("tcy2=\n", tcy2 )
+    print("tcy1=")
+    for i in range(len(tcy1)):
+        print(tcy1[i])
+    print("\ntcy2=")
+    for i in range(len(tcy2)):
+        print(tcy2[i])
+    
     #read mapped matrix
     #print("test ",matrixMapping[2][6])
     for i in range (pic.size[0]):
