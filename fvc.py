@@ -78,6 +78,7 @@ def oneSplit():
     print("\ntcy2=")
     for i in range(len(tcy2)):
         print(tcy2[i])
+    tcyGen(tcy1, tcy2)
     
     #read mapped matrix
     #print("test ",matrixMapping[2][6])
@@ -86,6 +87,30 @@ def oneSplit():
             print(matrixMapping[i][j], end=" ")
         print("\n")
     
+    return
+
+#Colors specified in hex code, #000000 for opaque black, #ffffff for opaque white
+#Transparencies are last 2 chars and written as hex value of transparency percentage
+#fully transparent=> alpha=0 in decimal =0/255 => 00 in hex
+#fully opaque=> alpha=1 in decimal =255/255 => ff in hex
+#Thus full white but 100% transparent is #ffffff00
+
+def tcyGen(tcy1, tcy2):
+    tcy1Out=Image.new("RGBA",(len(tcy1),len(tcy1)),color="#000000")
+    tcy2Out=Image.new("RGBA",(len(tcy2),len(tcy2)),color="#000000")
+    
+    pix1=tcy1Out.load()
+    pix2=tcy2Out.load()
+    
+    for i in range (len(tcy1)):
+        for j in range (len(tcy1)):
+            if tcy1[i][j]==0:
+                pix1[j,i]=(255,255,255,0)
+            if tcy2[i][j]==0:
+                pix2[j,i]=(255,255,255,0)
+    
+    tcy1Out.save("layer1.png")
+    tcy2Out.save("layer2.png")
     return
 
 def imgCreate():
