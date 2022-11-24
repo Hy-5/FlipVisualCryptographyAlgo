@@ -71,21 +71,21 @@ def oneSplit():
                     tcy2[(j*2)][(i*2)+1]=1
                     tcy2[(j*2)+1][(i*2)]=1
                     """tcy2[(j*2)+1][(i*2)+1]=0"""
-    print("\nReading transparencies\n")
+    """print("\nReading transparencies\n")
     print("tcy1=")
     for i in range(len(tcy1)):
         print(tcy1[i])
     print("\ntcy2=")
     for i in range(len(tcy2)):
-        print(tcy2[i])
+        print(tcy2[i])"""
     tcyGen(tcy1, tcy2)
     
     #read mapped matrix
     #print("test ",matrixMapping[2][6])
-    for i in range (pic.size[0]):
+    """for i in range (pic.size[0]):
         for j in range (pic.size[1]):
             print(matrixMapping[i][j], end=" ")
-        print("\n")
+        print("\n")"""
     
     return
 
@@ -126,6 +126,29 @@ def encryption():
     return
 
 def decryption():
+    print("Please choose the 1st layer")
+    layer1=loadimage()
+    print("Now choose the 2nd layer")
+    layer2=loadimage()
+    
+    
+    with Image.open(layer1) as lay1:
+        pix1=lay1.load()
+    with Image.open(layer2) as lay2:
+        pix2=lay2.load()
+        
+    imgOut=Image.new("RGBA", lay1.size, color="#00000000")
+    pixFinal=imgOut.load()
+    for i in range (lay1.size[0]):
+        for j in range (lay1.size[1]):
+            pixFinal[i,j]=pix1[i,j] or pix2[i,j]
+            """print("pix1 values=", pix1[i,j])
+            print("pix2 values=", pix2[i,j])
+            print("pixFinal values=", pixFinal[i,j])"""
+            
+    imgOut.save("decryptedImage.png")
+    
+    
     return
 
 
@@ -159,4 +182,3 @@ def main(argv):
 
 if __name__=='__main__':
     main(sys.argv[1:])
-
