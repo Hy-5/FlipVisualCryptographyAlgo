@@ -105,9 +105,9 @@ def tcyGen(tcy1, tcy2):
     for i in range (len(tcy1)):
         for j in range (len(tcy1)):
             if tcy1[i][j]==0:
-                pix1[j,i]=(255,255,255,0)
+                pix1[j,i]=(0,0,0,0)
             if tcy2[i][j]==0:
-                pix2[j,i]=(255,255,255,0)
+                pix2[j,i]=(0,0,0,0)
     
     tcy1Out.save("layer1.png")
     tcy2Out.save("layer2.png")
@@ -141,8 +141,19 @@ def decryption():
     pixFinal=imgOut.load()
     for i in range (lay1.size[0]):
         for j in range (lay1.size[1]):
-            pixFinal[i,j]=pix1[i,j] or pix2[i,j]
-            """print("pix1 values=", pix1[i,j])
+            
+            if (pix1[i,j])==(pix2[i,j]):
+                #print("same")
+                pixFinal[i,j]=pix1[i,j]
+            else:
+                #print("not same")
+                pixFinal[i,j]=max(pix1[i,j],pix2[i,j])
+                """print("1:", pix1[i,j], end=" ")
+                print("2:", pix2[i,j], end=" ")"""
+                #print("Final:", pixFinal[i,j])
+            
+            """pixFinal[i,j]=pix1[i,j] or pix2[i,j]
+            print("pix1 values=", pix1[i,j])
             print("pix2 values=", pix2[i,j])
             print("pixFinal values=", pixFinal[i,j])"""
             
