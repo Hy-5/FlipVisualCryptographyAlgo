@@ -1,5 +1,6 @@
-#Visual Cryptography and Flip Visual Cryptography Implementation and Evaluation
+#FlipVisualCryptography
 
+Visual Cryptography and Flip Visual Cryptography Implementation and Evaluation
 
 Implementing and testing on (n*n) images:
 
