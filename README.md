@@ -1,8 +1,6 @@
-#FlipVisualCryptography
+# Visual Cryptography and Flip Visual Cryptography Implementation and Evaluation
 
-Visual Cryptography and Flip Visual Cryptography Implementation and Evaluation
-
-Implementing and testing on (n*n) images:
+Implementation and testing on (n*n) images:
 
 1.Naor & Shamir - Visual Cryptography
 doi : https://doi.org/10.1007/BFb0053419
