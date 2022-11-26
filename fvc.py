@@ -76,9 +76,34 @@ def tcyGen(tcy1, tcy2):
     tcy2Out.save("layer2.png")
     return
 
+#Generates transparencies for FVC
+def fvcTcyGen(tcy1, tcy2):
+    #colors are hex codes with (optional) 2 last characters for transparency
+    #Fully opaque = 255 in dec => ff in hex || Fully transparent = 0 in dec => 00 in hex
+    tcy1Out=Image.new("RGBA",(len(tcy1),len(tcy1)),color="#000000")
+    tcy2Out=Image.new("RGBA",(len(tcy2),len(tcy2)),color="#000000")
+    
+    pix1=tcy1Out.load()
+    pix2=tcy2Out.load()
+    
+    for i in range (len(tcy1)):
+        for j in range (len(tcy1)):
+            if int(tcy1[i][j])==0:
+                pix1[i,j]=(0,0,0,0)
+            if int(tcy2[i][j])==0:
+                pix2[i,j]=(0,0,0,0)
+    
+    tcy1Out.save("fvcLayer1.png")
+    tcy2Out.save("fvcLayer2.png")
+    return
+
 
 #Lin et al. FVC algo (2010)
 #doi:10.1016/j.jvcir.2010.08.006
+
+# Decryption of secret image 1 done by overlaying fvclayer1 and 2
+# Decryption of secret image 2 done by overlaying 1 and 2, then horizontal flip of layer1
+
 def fvcEncrypt():
     print("Select the 1st secret image")
     secret1=loadimage()
@@ -104,99 +129,99 @@ def fvcEncrypt():
     rb1=[[b1[j][i] for j in range(len(b1))] for i in range(len(b1[0])-1,-1,-1)]
     """for i in range (len(rb1)):
         print(rb1[i])"""
-    print("b1:")
+    """print("b1:")
     for i in range (len(rb1)):
         print(rb1[i])
-    print("\n")
+    print("\n")"""
     b2=[[0,0,1,1,1,1],[0,1,0,1,1,1],[0,1,1,1,1,0],[1,1,0,1,1,0]]
     rb2=[[b2[j][i] for j in range(len(b2))] for i in range(len(b2[0])-1,-1,-1)]
-    print("b2:")
+    """print("b2:")
     for i in range (len(rb2)):
         print(rb2[i])
-    print("\n")
+    print("\n")"""
     b3=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,0,1,1,0,1],[0,1,1,1,1,0]]
     rb3=[[b3[j][i] for j in range(len(b3))] for i in range(len(b3[0])-1,-1,-1)]
-    print("b3:")
+    """print("b3:")
     for i in range (len(rb3)):
         print(rb3[i])
-    print("\n")
+    print("\n")"""
     b4=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,0,1,1,0,1],[1,1,0,1,1,0]]
     rb4=[[b4[j][i] for j in range(len(b4))] for i in range(len(b4[0])-1,-1,-1)]
-    print("b4:")
+    """print("b4:")
     for i in range (len(rb4)):
         print(rb4[i])
-    print("\n")
+    print("\n")"""
     b5=[[0,0,1,1,1,1],[0,1,0,1,1,1],[0,1,1,1,1,0],[1,0,1,1,1,0]]
     rb5=[[b5[j][i] for j in range(len(b5))] for i in range(len(b5[0])-1,-1,-1)]
-    print("b5:")
+    """print("b5:")
     for i in range (len(rb5)):
         print(rb5[i])
-    print("\n")
+    print("\n")"""
     b6=[[0,0,1,1,1,1],[0,1,0,1,1,1],[0,1,1,1,0,1],[1,1,1,1,0,0]]
     rb6=[[b6[j][i] for j in range(len(b6))] for i in range(len(b6[0])-1,-1,-1)]
-    print("b6:")
+    """print("b6:")
     for i in range (len(rb6)):
         print(rb6[i])
-    print("\n")
+    print("\n")"""
     b7=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,0,1,0,1,1],[1,0,1,1,0,1]]
     rb7=[[b7[j][i] for j in range(len(b7))] for i in range(len(b7[0])-1,-1,-1)]
-    print("b7:")
+    """print("b7:")
     for i in range (len(rb7)):
         print(rb7[i])
-    print("\n")
+    print("\n")"""
     b8=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,0,1,1,0,1],[1,1,1,0,1,0]]
     rb8=[[b8[j][i] for j in range(len(b8))] for i in range(len(b8[0])-1,-1,-1)]
-    print("b8:")
+    """print("b8:")
     for i in range (len(rb8)):
         print(rb8[i])
-    print("\n")
+    print("\n")"""
     b9=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,0,0,1,1],[0,1,1,0,1,1]]
     rb9=[[b9[j][i] for j in range(len(b9))] for i in range(len(b9[0])-1,-1,-1)]
-    print("b9:")
+    """print("b9:")
     for i in range (len(rb9)):
         print(rb9[i])
-    print("\n")
+    print("\n")"""
     b10=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,0,1,0,1],[1,1,0,1,1,0]]
     rb10=[[b10[j][i] for j in range(len(b10))] for i in range(len(b10[0])-1,-1,-1)]
-    print("b10:")
+    """print("b10:")
     for i in range (len(rb10)):
         print(rb10[i])
-    print("\n")
+    print("\n")"""
     b11=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,1,1,0,0],[0,1,1,1,1,0]]
     rb11=[[b11[j][i] for j in range(len(b11))] for i in range(len(b11[0])-1,-1,-1)]
-    print("b11:")
+    """print("b11:")
     for i in range (len(rb11)):
         print(rb11[i])
-    print("\n")
+    print("\n")"""
     b12=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,1,1,0,0],[1,1,0,1,1,0]]
     rb12=[[b12[j][i] for j in range(len(b12))] for i in range(len(b12[0])-1,-1,-1)]
-    print("b12:")
+    """print("b12:")
     for i in range (len(rb12)):
         print(rb12[i])
-    print("\n")
+    print("\n")"""
     b13=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,0,0,1,1],[1,0,1,0,1,1]]
     rb13=[[b13[j][i] for j in range(len(b13))] for i in range(len(b13[0])-1,-1,-1)]
-    print("b13:")
+    """print("b13:")
     for i in range (len(rb13)):
         print(rb13[i])
-    print("\n")
+    print("\n")"""
     b14=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,0,0,1,1],[1,1,1,0,1,0]]
     rb14=[[b14[j][i] for j in range(len(b14))] for i in range(len(b14[0])-1,-1,-1)]
-    print("b14:")
+    """print("b14:")
     for i in range (len(rb14)):
         print(rb14[i])
-    print("\n")
+    print("\n")"""
     b15=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,1,0,0,1],[1,0,1,0,1,1]]
     rb15=[[b15[j][i] for j in range(len(b15))] for i in range(len(b15[0])-1,-1,-1)]
-    print("b5:")
+    """print("b5:")
     for i in range (len(rb15)):
         print(rb15[i])
-    print("\n")
+    print("\n")"""
     b16=[[0,0,1,1,1,1],[0,1,0,1,1,1],[1,1,1,0,0,1],[1,1,1,0,1,0]]
     rb16=[[b16[j][i] for j in range(len(b16))] for i in range(len(b16[0])-1,-1,-1)]
-    print("b16:")
+    """print("b16:")
     for i in range (len(rb16)):
-        print(rb16[i])
+        print(rb16[i])"""
     
     #checking the quadruples
     quad=""
@@ -207,7 +232,7 @@ def fvcEncrypt():
     for i in range(sc1.size[0]):
         for j in range(sc1.size[1]):
             randomCol=""
-            print(i,j)
+            #print(i,j)
             if pixel1[j,i]<(200,200,200,200):
                 index1="B"
             else:
@@ -227,75 +252,90 @@ def fvcEncrypt():
             quad=index1+index2+index3+index4
             """print("supposed p1 is", pixel1[i,j])
             print("supposed p2 is", pixel2[i,j])"""
-            print("For",i,j,"Value of quad is",quad)
+            #print("For",i,j,"Value of quad is",quad)
             
             a=random.randint(0,5)
     
             if quad=="WWWW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb1[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WWWB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb2[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WWBW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb3[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WWBB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb4[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WBWW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb5[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WBWB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb6[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WBBW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb7[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="WBBB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb8[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BWWW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb9[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BWWB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb10[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BWBW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb11[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BWBB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb12[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BBWW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb13[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BBWB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb14[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BBBW":
                 for iter in range(len(b1)):
                     randomCol+=str(rb15[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
             elif quad=="BBBB":
                 for iter in range(len(b1)):
                     randomCol+=str(rb16[a][iter])
-                print("randomCol is",randomCol)
+                #print("randomCol is",randomCol)
+          
+            #populating transparency matrix from basis matrix random column selection
+            tcy1[j][i]=randomCol[0]
+            tcy1[sc1.size[1]-1-j][i]=randomCol[1]
+            tcy2[j][i]=randomCol[2]
+            tcy2[sc1.size[1]-1-j][i]=randomCol[3]
             
+    """print("HEEEERRRRRRRRRRRRREEEEEEEEEEE")
+    for i in range (len(tcy1)):
+        print(tcy1[i])
+    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    for i in range (len(tcy2)):
+        print(tcy2[i])"""
+    
+    fvcTcyGen(tcy1, tcy2)
+    
     return
 
 
